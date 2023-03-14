@@ -1,29 +1,38 @@
-let n = 3;
+let n = 1;
 
 if (n < 1 || n > 4) {
     console.log("ERROR");
 }
 else {
     let lengthSideMax = n * 4 - 1;
-    let array = new Array(lengthSideMax);
-    for (let i = 0; i < lengthSideMax; i++) {
-        array[i] = new Array(lengthSideMax).fill(" ");
-    }
-    for (let i = 0; i < n; i++) {
-        let initPoint = i * 2;
-        let finishPoint = lengthSideMax - initPoint;
-        for (let f = initPoint; f < finishPoint; f++) {
-            for (let c = initPoint; c < finishPoint; c++) {
-                if (f == initPoint || c == initPoint) {
-                    array[f][c] = "*";
-                }
-                if (f == finishPoint - 1 || c == finishPoint - 1) {
-                    array[f][c] = "*";
-                }
+    let matriz = Array(lengthSideMax).fill(Array(lengthSideMax));
+    for (let i = 0; i < lengthSideMax / 2; i++) {
+        let arrayTemp = new Array(lengthSideMax);
+        arrayTemp[0] = "*";
+        for (let j = 1; j < arrayTemp.length; j++) {
+            if (i == 0) {
+                arrayTemp[j] = "*";
             }
+            else if (arrayTemp[j - 1] === "*" && (j <= i || j >= lengthSideMax - i)) {
+                arrayTemp[j] = " ";
+            }
+            else if (arrayTemp[j - 1] === " " && (j <= i || j >= lengthSideMax - i)) {
+                arrayTemp[j] = "*";
+            }
+            else if (arrayTemp[j - 1] === " ") {
+                arrayTemp[j] = " ";
+            }
+            else if (arrayTemp[j - 1] === "*") {
+                arrayTemp[j] = "*";
+            }
+
         }
+        matriz[i] = arrayTemp;
     }
-    for (let i = 0; i < lengthSideMax; i++) {
-        console.log(array[i].join(""));
+    for (let i = 0; i < lengthSideMax / 2; i++) {
+        console.log(matriz[i].join(""));
+    }
+    for (let i = (lengthSideMax - 3) / 2; i >= 0; i--) {
+        console.log(matriz[i].join(""));
     }
 }
